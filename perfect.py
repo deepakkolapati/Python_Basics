@@ -2,11 +2,11 @@
 
 @Author: Kolapati Mani deepak Chandu
 
-@Date: 2024-01-18 2:10:00
+@Date: 2024-01-18 3:10:00
 
 @Last Modified by: Kolapati Mani deepak Chandu
 
-@Last Modified time: 2024-01-18 2:10:00
+@Last Modified time: 2024-01-18 3:10:00
 
 @Title : finding the nth term in fibonacci series
 
