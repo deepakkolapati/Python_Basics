@@ -8,7 +8,7 @@
 
 @Last Modified time: 2024-01-19 11:25:30
 
-@Title : Array datastructures
+@Title :  Array datastructures
 '''
 
 def print_array(arr):
