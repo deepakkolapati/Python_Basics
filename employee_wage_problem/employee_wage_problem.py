@@ -30,13 +30,17 @@ def caluclate_wage(wage_per_hour=8,full_day_hour=8,part_time_hour=4) -> int:
     Return: int
     """
     is_present=check_attendance()
-    if is_present==2:
-        return wage_per_hour*full_day_hour
-    elif is_present==1:
-        return wage_per_hour*part_time_hour
-    else:
-        return 0
+    match is_present:
+        case 2:
+            return wage_per_hour*full_day_hour
+        case 1: 
+            return wage_per_hour*part_time_hour
+        case 0:
+            return 0
+    
+def calculate_monthly_wage():
 
+    pass
 
 def main():
     print("Welcome to Employee Wage problem")
