@@ -47,13 +47,44 @@ def calculate_monthly_wage(no_of_days=20) -> int:
     
     monthly_wage=0
     for i in range(no_of_days):
-        monthly_wage+=caluclate_daily_wage
+        monthly_wage+=caluclate_daily_wage()
     return monthly_wage
+
+def wage_computation(no_of_days=20,no_of_hours=100,full_day_hour=8,part_time_hour=3,wage_per_hour=20):
+    days=0
+    hours=0
+    wage=0
+    while days<no_of_days and hours<no_of_hours:
+        employee_status=check_attendance()
+        match employee_status:
+            case 2:
+                days+=1
+                hours+=full_day_hour
+                wage+=full_day_hour*wage_per_hour
+                  
+            case 1: 
+                days+=1
+                hours+=part_time_hour
+                wage+=part_time_hour*wage_per_hour
+                
+                   
+            case 0:
+                  continue
+                
+    return days,hours,wage
+           
+            
+
+                  
+          
+
+
+
 
 def main():
     print("Welcome to Employee Wage problem")
-    print(f"The employees wage is {caluclate_daily_wage()}")
-
+    days,hours,wage=wage_computation()
+    print(f"The employee worked for {days} days {hours} hours his wage is {wage}")
 
 if __name__=="__main__":
     main()
