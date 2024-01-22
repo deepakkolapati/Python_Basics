@@ -73,7 +73,46 @@ def wage_computation(no_of_days=20,no_of_hours=100,full_day_hour=8,part_time_hou
                 
     return days,hours,wage
            
-            
+class Employee:
+    def __init__(self,wage_per_hour,full_day_hour,part_time_hour,no_of_days,no_of_hours):
+        self.wage_per_hour=wage_per_hour
+        self.full_day_hour=full_day_hour
+        self.part_time_hour=part_time_hour
+        self.no_of_days=no_of_days
+        self.no_of_hours=no_of_hours
+        self.days=0
+        self.hours=0
+        self. wage=0
+    def check_attendance(self):
+        attendance_type=random.randint(0,2)
+        return attendance_type
+    
+    def caluclate_daily_wage(self):
+        self.attendance=self.check_attendance()
+        match self.attendance:
+            case 2:
+                return self.wage_per_hour*self.full_day_hour
+            case 1:
+                return self.wage_per_hour*self.part_time_hour
+            case 0:
+                return 0
+    def calculate_monthly_wage(self):
+        
+        while self.days<self.no_of_days and self.hours<self.no_of_hours:
+            self.attendance=self.check_attendance()
+            match self.attendance:
+               case 2:
+                  self.days+=1
+                  self.hours+=self.full_day_hour
+                  self.wage+=self.full_day_hour*self.wage_per_hour
+                  
+               case 1: 
+                  self.days+=1
+                  self.hours+=self.part_time_hour
+                  self.wage+=self.part_time_hour*self.wage_per_hour
+                
+                
+        return self.days,self.hours,self.wage
 
                   
           
@@ -83,8 +122,9 @@ def wage_computation(no_of_days=20,no_of_hours=100,full_day_hour=8,part_time_hou
 
 def main():
     print("Welcome to Employee Wage problem")
-    days,hours,wage=wage_computation()
-    print(f"The employee worked for {days} days {hours} hours his wage is {wage}")
+    emp1=Employee(20,8,3,20,100)
+    days,hours,wage=emp1.calculate_monthly_wage()
+    print(f"The employee worked for {days} days {hours} hours his monthly wage is {wage}")
 
 if __name__=="__main__":
     main()
