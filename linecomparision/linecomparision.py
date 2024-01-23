@@ -12,15 +12,20 @@
 
 '''
 import math
+
+class Point:
+
+    def __init__(self, x , y) -> None:
+        self.x = x
+        self.y = y
 class Line:
     
     def __init__(self,x1,y1,x2,y2):
-        self.x1=x1
-        self.y1=y1
-        self.x2=x2
-        self.y2=y2
+        self.point1= Point(x1, y1)
+        self.point2 = Point(x2, y2)
+
     def get_Length(self):
-        return math.sqrt((self.x2-self.x1)**2 + (self.y2-self.y1)**2)
+        return math.sqrt((self.point2.x-self.point1.x)**2 + (self.point2.y-self.point1.y)**2)
     def __eq__(self,other):
         return self.get_Length()==other.get_Length()
     def __lt__(self,other):
