@@ -41,6 +41,7 @@ class Game:
         self.player1=player1
         self.player2=player2
     def start_game(self):
+        print("***************************************")
         print("Welcome to the Snake and Ladder Program")
         player=0
         dice_count=0
@@ -57,7 +58,10 @@ class Game:
                 print("Player 2 won the game")
                 break
             player=(player+1)%2
+        print(f"Player 1 is at position {self.player1.position}")
+        print(f"Player 2 is at position {self.player2.position}")
         print(f"The dice rolled for {dice_count} times")
+        print("***************************************")
 
 
 
