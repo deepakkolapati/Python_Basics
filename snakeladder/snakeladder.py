@@ -11,5 +11,9 @@
 @Title : Creating Snake Ladder Program
 
 '''
+import random
 
 player_position=0
+
+def roll_dice():
+    return random.randint(1,6)
