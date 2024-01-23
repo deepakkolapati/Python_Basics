@@ -13,16 +13,26 @@
 '''
 import random
 
-player_position=0
 
-def roll_dice():
-    return random.randint(1,6)
 
-def check_option():
+def roll_dice(player_position):
+    dice=random.randint(1,6)
     options=["snake","ladder","no play"]
     option=random.choice(options)
-    return option
+    if option=="snake":
+        player_position-=dice
+        if player_position<0:
+            player_position=0
+    if option=="ladder":
+        player_position+=dice
+    return player_position
+
+
+    
+    
+    
 
 if __name__=="__main__":
-    print(roll_dice())
-    print(check_option())
+    player_position=0
+    player_position=roll_dice(player_position)
+    print(player_position)
