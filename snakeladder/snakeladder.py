@@ -17,7 +17,8 @@ import random
 class Player:
     def __init__(self):
         self.position=0
-    def roll_dice(self):
+
+    def move_position(self):
         dice=random.randint(1,6)
         options=["snake","ladder","no play"]
         extra_chance=True
@@ -27,8 +28,7 @@ class Player:
                 self.position-=dice
                 if self.position<0:
                     self.position=0
-                extra_chance=False
-                
+                extra_chance=False 
             elif option=="ladder":
                 if self.position+dice<=100:
                     self.position+=dice
@@ -47,17 +47,15 @@ class Game:
         dice_count=0
         while self.player1.position!=100 and self.player2.position!=100:
             if player==0:
-                self.player1.roll_dice()
+                self.player1.move_position()
             if player==1:
-                self.player2.roll_dice()
+                self.player2.move_position()
             dice_count+=1
-            if self.player1.position==100:
-                print("Player 1 won the game")
-                break
-            if self.player2.position==100:
-                print("Player 2 won the game")
-                break
             player=(player+1)%2
+        if self.player1.position==100:
+                print("Player 1 won the game")
+        if self.player2.position==100:
+            print("Player 2 won the game")
         print(f"Player 1 is at position {self.player1.position}")
         print(f"Player 2 is at position {self.player2.position}")
         print(f"The dice rolled for {dice_count} times")
