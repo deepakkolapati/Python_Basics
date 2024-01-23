@@ -43,7 +43,7 @@ class Game:
     def start_game(self):
         print("***************************************")
         print("Welcome to the Snake and Ladder Program")
-        player=0
+        player=random.randint(0,1)
         dice_count=0
         while self.player1.position!=100 and self.player2.position!=100:
             if player==0:
