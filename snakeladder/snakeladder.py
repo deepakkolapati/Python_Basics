@@ -35,7 +35,10 @@ def roll_dice(player_position):
 
 if __name__=="__main__":
     player_position=0
+    dice_count=0
     print("The player is at position 0")
     while player_position<100:
       player_position=roll_dice(player_position)
+      dice_count+=1
       print(f"PLayer is at position {player_position}")
+    print(f"The dice was rolled for {dice_count} times")
