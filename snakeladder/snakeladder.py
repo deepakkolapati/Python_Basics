@@ -24,7 +24,8 @@ def roll_dice(player_position):
         if player_position<0:
             player_position=0
     if option=="ladder":
-        player_position+=dice
+        if player_position+dice<=100:
+           player_position+=dice
     return player_position
 
 
@@ -34,5 +35,7 @@ def roll_dice(player_position):
 
 if __name__=="__main__":
     player_position=0
-    player_position=roll_dice(player_position)
-    print(player_position)
+    print("The player is at position 0")
+    while player_position<100:
+      player_position=roll_dice(player_position)
+      print(f"PLayer is at position {player_position}")
