@@ -70,6 +70,8 @@ class Company:
     def update(self,employee_name,wage_per_hour):
         if employee_name in self.emplyoee_dict:
             self.emplyoee_dict[employee_name].wage_per_hour=wage_per_hour
+            self.emplyoee_dict[employee_name].calculate_monthly_wage()
+
         
 
     def delete(self,employee_name):
@@ -79,34 +81,34 @@ class Company:
             print("Employee not found")
     
 
+class MultipleCompanies:
+    def __init__(self):
+        self.companies={}
+
+    def add_company(self,company):
+        if company.company_name not in self.companies:
+            self.companies[company.company_name]=company
+
+    def get_company(self,company_name):
+        if company_name in self.companies:
+            return self.companies[company_name]
+        else:
+            print("The company not found")
+        
+    def delete_company(self,company_name):
+        if company_name in self.companies:
+            del self.companies[company_name]
+
+    
 
 
 def main():
     print("Welcome to Employee Wage problem")
-    # emp1=Employee("Deepak",20,8,3,20,100)
-    # emp2=Employee("Joshi",20,8,3,20,100)
-    # # emp1.calculate_monthly_wage()
-    # # print(f"The employee worked for {emp1.days} days {emp1.hours} hours his monthly wage is {emp1.wage}")
-    # cmp1=Company("Tcs")
-    # cmp1.add(emp1)
-    # cmp1.display("Deepak")
-    # print("****************************************************")
-    # cmp1.add(emp2)
-    # cmp1.display("Joshi")
-    # print("****************************************************")
-    # cmp1.delete("Deepak")
-    # cmp1.display("Deepak")
-    # print("****************************************************")
-    # cmp1.update("Joshi",25)
-    # cmp1.display("Joshi")
-    # print("****************************************************")
-    # cmp1.delete("Joshi")
-    # cmp1.display("Joshi")
-
-    company = Company('ABC')
+    MC=MultipleCompanies()
     while True:
         choice = int(input('Enter 1 to add, 2 to update, 3 to display, 4 to delete : '))
         if choice == 1:
+            company_name=input("Enter the Company_name: ")
             employee_name=input("Enter the employee_name: ")
             wage_per_hour=int(input("Enter the wage_per_hour: "))
             full_day_hour=int(input("Enter the full_day_hour: "))
@@ -115,19 +117,51 @@ def main():
             no_of_hours=int(input("Enter the no_of_hours: "))
             employee = Employee(employee_name,wage_per_hour,full_day_hour,part_time_hour,no_of_days,no_of_hours)
             employee.calculate_monthly_wage()
-            company.add(employee)
+            if company_name in MC.companies:
+                MC.companies[company_name].add(employee)
+            else:
+                company=Company(company_name)
+                company.add(employee)
+                MC.add_company(company)
+            
         elif choice==2:
+            company_name=input("Enter the Company_name: ")
             employee_name=input("Enter the employee_name: ")
-            new_wage=input("Enter the new wage_per_hour: ")
-            company.update(employee_name,new_wage)
+            new_wage=int(input("Enter the new wage_per_hour: "))
+            if company_name in MC.companies:
+                if employee_name in MC.companies[company_name].emplyoee_dict:
+                    MC.companies[company_name].update(employee_name,new_wage)
+                
+                else:
+                    print("The employee is not present")
+            else:
+                print("The Company name is not present")
         elif choice ==3:
+            company_name=input("Enter the Company_name: ")
             employee_name=input("Enter the employee_name: ")
-            company.display(employee_name)
+            if company_name in MC.companies:
+                if employee_name in MC.companies[company_name].emplyoee_dict:
+                    MC.companies[company_name].display(employee_name)
+                else:
+                    print("The employee is not present")
+            else:
+                print("The Company name is not present")
+
+
+            
         elif choice==4:
+            company_name=input("Enter the Company_name: ")
             employee_name=input("Enter the employee_name: ")
-            company.delete(employee_name)
+            if company_name in MC.companies:
+                if employee_name in MC.companies[company_name].emplyoee_dict:
+                      MC.companies[company_name].delete(employee_name)
+                else:
+                    print("The employee is not present")
+            else:
+                print("The Company name is not present")
         else:
             break
+
 
 
 
