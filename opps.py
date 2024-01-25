@@ -22,7 +22,7 @@ class Person:
         return f"{self.fname} {self.lname}"
 
     def introduce(self):
-        return f"Hii.I'm {self.fname} {self.lname}.I'm {self.__age}yrs old"
+        return f"Hii. I'm {self.fname} {self.lname}. I'm {self.__age}yrs old."
     
     def get_age(self):
         return self.__age
@@ -41,21 +41,37 @@ class Person:
 
     @classmethod
     def annonymous(cls):
-        return Person("Iron","Man",40)
+        return cls("Iron","Man",40)
 
 
+class Student(Person):
+    schoolname="ABC"
+    def __init__(self,fname,lname,age,marks):
+        Person.__init__(self, fname,lname,age)
+        # super().__init__(fname, lname, age)
+        self.__marks = marks
 
+    def get_marks(self):
+        return self.__marks
     
+    def set_marks(self,marks):
+        self.__marks=marks
+
+    def introduce(self):
+        return super().introduce()+ f" Im studying in {self.schoolname} school"
+    
+    @classmethod
+    def annonymous(cls):
+        # return super().annonymous()
+        return cls('deepak', 'chandu', 22, 100)
+    
+    
+
 if __name__=="__main__":
-     p=Person.annonymous()
-     print(p.introduce())
-     q=Person("Super","Man",35)
-     print(p<q)
-     p.set_age(30)
-     print(p<q)
-     print(p>q)
-     q.set_age(25)
-     print(p>q)
-     print(p==q)
-     p.set_age(25)
-     print(p==q)
+    p=Person.annonymous()
+    print(p.introduce())
+    s=Student("vvs","sudheer",21,950)
+    print(s.introduce())
+    s2=Student.annonymous()
+    # print(s2.introduce())
+    print(s2.introduce())
