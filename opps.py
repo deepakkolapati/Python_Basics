@@ -23,6 +23,21 @@ class Person:
 
     def introduce(self):
         return f"Hii.I'm {self.fname} {self.lname}.I'm {self.__age}yrs old"
+    
+    def get_age(self):
+        return self.__age
+    
+    def set_age(self,age):
+        self.__age=age
+    
+    def __lt__(self,other):
+        return self.__age< other.get_age()
+    
+    def __gt__(self,other):
+        return self.__age> other.get_age()
+    
+    def __eq__(self,other):
+        return self.__age== other.get_age()
 
     @classmethod
     def annonymous(cls):
@@ -34,3 +49,13 @@ class Person:
 if __name__=="__main__":
      p=Person.annonymous()
      print(p.introduce())
+     q=Person("Super","Man",35)
+     print(p<q)
+     p.set_age(30)
+     print(p<q)
+     print(p>q)
+     q.set_age(25)
+     print(p>q)
+     print(p==q)
+     p.set_age(25)
+     print(p==q)
