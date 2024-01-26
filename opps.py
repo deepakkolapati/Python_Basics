@@ -24,10 +24,12 @@ class Person:
     def introduce(self):
         return f"Hii. I'm {self.fname} {self.lname}. I'm {self.__age}yrs old."
     
-    def get_age(self):
+    @property
+    def age(self):
         return self.__age
     
-    def set_age(self,age):
+    @age.setter
+    def age(self,age):
         self.__age=age
     
     def __lt__(self,other):
@@ -47,14 +49,16 @@ class Person:
 class Student(Person):
     schoolname="ABC"
     def __init__(self,fname,lname,age,marks):
-        Person.__init__(self, fname,lname,age)
-        # super().__init__(fname, lname, age)
+        # Person.__init__(self, fname,lname,age)
+        super().__init__(fname, lname, age)
         self.__marks = marks
 
-    def get_marks(self):
+    @property
+    def marks(self):
         return self.__marks
     
-    def set_marks(self,marks):
+    @marks.setter
+    def marks(self,marks):
         self.__marks=marks
 
     def introduce(self):
@@ -73,5 +77,5 @@ if __name__=="__main__":
     s=Student("vvs","sudheer",21,950)
     print(s.introduce())
     s2=Student.annonymous()
-    # print(s2.introduce())
+    print(s2.introduce())
     print(s2.introduce())
