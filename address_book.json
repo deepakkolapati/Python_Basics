@@ -1,0 +1,36 @@
+{
+    "abc": {
+        "deepak": {
+            "fname": "deepak",
+            "lname": "chandu",
+            "address": "malligai",
+            "city": "chennai",
+            "state": "andhra",
+            "zip": "533125",
+            "phno": "7997799689",
+            "email": "deepak@gmail.com"
+        },
+        "joshi": {
+            "fname": "joshi",
+            "lname": "felix",
+            "address": "chennai",
+            "city": "chenai",
+            "state": "tn",
+            "zip": "432",
+            "phno": "532",
+            "email": "joshi@gmail.com"
+        }
+    },
+    "xyz": {
+        "yash": {
+            "fname": "yash",
+            "lname": "wanth",
+            "address": "chennai",
+            "city": "chennai",
+            "state": "andhra",
+            "zip": "345",
+            "phno": "456",
+            "email": "yash@gmail.com"
+        }
+    }
+}

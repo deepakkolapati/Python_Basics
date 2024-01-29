@@ -10,7 +10,8 @@
 
 @Title : AddressBook Problem
 '''
-
+import json
+import csv
 from logger import get_logger
 
 log = get_logger()
@@ -26,6 +27,10 @@ class Contact:
         self.zip=zip
         self.phno=phno
         self.email=email
+      #   self.contact=[fname,lname, address,city, state, zip, phno,email]
+      #   self.contact={'fname':fname,'lname':lname,'address':address,'city':city,'state':state,
+      #                 'zip':zip,'phno':phno,'email':email}
+        
 
    def __repr__(self) -> str:
       return f'{self.fname}'
@@ -35,15 +40,13 @@ class AddressBook:
 
    def __init__(self, name):
         self.book_name = name
-      #   self.contact_names=[]
         self.contacts={}
        
 
    def add_contact(self,contact):
         if contact.fname not in self.contacts:
           self.contacts[contact.fname]=contact
-         #  self.contact_names.append(contact.fname)
-      
+         #  self.contact_names.append(contact.fname
         else:
             print("The Contact already exists")
 
@@ -131,26 +134,69 @@ class AddressBook:
 
 
 class MultiAddressBook:
-    def __init__(self):
+   def __init__(self):
        self.books_dict={}
+       self.json_file = 'address_book.json'
+       self.csv_file='address_book.csv'
+
+      
 
 
-    def get_book(self, book_name):
+   def get_book(self, book_name):
        return self.books_dict.get(book_name)
     
-    def add_addressbook(self,addressbook):
+   def add_addressbook(self,addressbook):
         if addressbook.book_name in self.books_dict:
           print("The Address Book already exists")
         else:
           self.books_dict[addressbook.book_name]=addressbook
         
 
-    def delete_addressbook(self,name):
+   def delete_addressbook(self,name):
        if name in self.MultiAddressBook:
           del self.MultiAddressBook[name]
 
-    def get_contacts_by_city_or_state(self, city_or_state):
+   def get_contacts_by_city_or_state(self, city_or_state):
       list(map(lambda book: book.contact_by_city_or_state(city_or_state), self.books_dict.values()))
+
+
+   def save_to_json(self):
+      json_data = {}
+      with open(self.json_file, 'w') as file:
+         for name, book_obj in self.books_dict.items():
+            if not name in json_data:
+               json_data[name] = {}
+            contact_data = json_data.get(name)
+            for contact_obj in book_obj.contacts.values():
+               contact_data.update({contact_obj.fname: contact_obj.__dict__})
+               
+         json.dump(json_data, file, indent=4)
+         print(json.dumps(json_data), type(json.dumps(json_data)))
+
+   def save_to_csv(self):
+      with open(self.csv_file,'w') as file:
+         field_names=["book_name","fname","lname","address",
+            "city","state","zip","phno","email"]
+         writer = csv.DictWriter(file, fieldnames=field_names)
+         writer.writeheader()
+         # writer.writerow(json_data)
+         for name,book_obj in self.books_dict.items():
+            row_dict={}
+            row_dict.update(book_name=name)
+            for contact_obj in book_obj.contacts.values():
+               row_dict.update(contact_obj.__dict__)
+               writer.writerow(row_dict)
+            
+            
+            
+               
+            
+
+
+           
+
+
+
          
       
 def get_book_obj():
@@ -172,6 +218,8 @@ if __name__=="__main__":
             book = get_book_obj()
             books.add_addressbook(book)
             book.add_contacts()
+            books.save_to_json()
+            books.save_to_csv()
 
         elif choice==2:
            book = get_book_obj()
