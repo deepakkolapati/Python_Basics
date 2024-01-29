@@ -48,13 +48,19 @@ class AddressBook:
           self.contacts[contact.fname]=contact
          #  self.contact_names.append(contact.fname
         else:
-            print("The Contact already exists")
+            log.error("The Contact already exists")
+            
 
    def add_contacts(self):
        
        while True:
-            option=int(input("Enter 1 to add new contact, 2 to break: "))
-            if option==1:
+            try:
+               option=int(input("Enter 1 to add new contact, 2 to break: "))
+            except ValueError:
+               log.exception("Enter only integer values")
+            else:
+                if option!=1:
+                   break
                 fname=input("Enter the persons fname: ")
                 lname=input("Enter the persons lname: ")
                 address=input("Enter the persons address: ")
@@ -65,14 +71,13 @@ class AddressBook:
                 email=input("Enter the persons email: ")
                 contact=Contact(fname,lname,address,city,state,zip,phno,email)
                 self.add_contact(contact)
-            else:
-               break
         
    def delete_contact(self,fname):
         if fname in self.contacts:
             self.contacts.pop(fname)
         else:
-            print("The Contact doesn't exist")
+            log.error("The Contact doesn't exist")
+            
     
    def get_contact(self,fname):
        if fname in self.contacts:
@@ -90,43 +95,44 @@ class AddressBook:
                ''')
          #  print(f'{contact.fname}\t')
        else:
-          print("The Person doesn't exist")
+          log.error("The Contact doesn't exist")
     
    def edit_contact(self,fname):
-        if fname in self.contacts:
+      if fname in self.contacts:
+         contact=self.contacts[fname]
+         while True:
+               try:
+                  edit=int(input("Enter 1 to change address, 2 to change city, 3 to change zip, 4 to change phno, 5 to change email: "))
+               except ValueError:
+                  log.error("Enter only integer values")
+               else:
+                  if edit ==1:
+                     new_address=input("Enter the new address: ")
+                     contact.address=new_address
 
-            contact=self.contacts[fname]
+                  elif edit==2:
+                     new_city=input("Enter the new city: ")
+                     contact.city=new_city
+                  
 
-            while True:
-                edit=int(input("Enter 1 to change address, 2 to change city, 3 to change zip, 4 to change phno, 5 to change email: "))
-                
-                if edit ==1:
-                  new_address=input("Enter the new address: ")
-                  contact.address=new_address
+                  elif edit==3:
+                     new_zip=input("Enter the new zip: ")
+                     contact.zip=new_zip
 
-                elif edit==2:
-                  new_city=input("Enter the new city: ")
-                  contact.city=new_city
-                
+                  elif edit==4:
+                     new_phno=input("Enter the new phno: ")
+                     contact.phno=new_phno
 
-                elif edit==3:
-                  new_zip=input("Enter the new zip: ")
-                  contact.zip=new_zip
+                  elif edit==5:
+                     new_state=input("Enter the new state: ")
+                     contact.state=new_state
+                  
 
-                elif edit==4:
-                  new_phno=input("Enter the new phno: ")
-                  contact.phno=new_phno
+                  else:
+                     break
 
-                elif edit==5:
-                  new_state=input("Enter the new state: ")
-                  contact.state=new_state
-                 
-
-                else:
-                   break
-
-        else:
-           print("The contact doesn't exist ")
+      else:
+           log.error("The Contact doesn't exist")
 
    def contact_by_city_or_state(self, city_or_state):
       contacts = list(filter(lambda contact: city_or_state in [contact.city, contact.state], self.contacts.values()))
@@ -138,9 +144,6 @@ class MultiAddressBook:
        self.books_dict={}
        self.json_file = 'address_book.json'
        self.csv_file='address_book.csv'
-
-      
-
 
    def get_book(self, book_name):
        return self.books_dict.get(book_name)
@@ -171,34 +174,20 @@ class MultiAddressBook:
                contact_data.update({contact_obj.fname: contact_obj.__dict__})
                
          json.dump(json_data, file, indent=4)
-         print(json.dumps(json_data), type(json.dumps(json_data)))
 
    def save_to_csv(self):
       with open(self.csv_file,'w') as file:
          field_names=["book_name","fname","lname","address",
             "city","state","zip","phno","email"]
-         writer = csv.DictWriter(file, fieldnames=field_names)
+         writer = csv.DictWriter(file, fieldnames=field_names, lineterminator='\n')
          writer.writeheader()
-         # writer.writerow(json_data)
          for name,book_obj in self.books_dict.items():
             row_dict={}
             row_dict.update(book_name=name)
             for contact_obj in book_obj.contacts.values():
                row_dict.update(contact_obj.__dict__)
                writer.writerow(row_dict)
-            
-            
-            
-               
-            
-
-
-           
-
-
-
-         
-      
+    
 def get_book_obj():
    book_name = input('Enter book name: ')
    book = books.get_book(book_name)
@@ -206,57 +195,39 @@ def get_book_obj():
       book = AddressBook(book_name)
    return book
       
-       
-
 
 if __name__=="__main__":
    books =  MultiAddressBook()
    while True:
-        
-        choice = int(input("Enter 1 for add contacts, 2 for edit contact,3 for get contacts,4 for get contacts by cityorstate,5 for delete contacts: "))
-        if choice == 1:
+      try :
+         choice = int(input('''Enter 1 for add contacts, 2 for edit contact,3 for get contacts,4 for get contacts by cityorstate,5 for delete contacts:'''))
+         
+      except ValueError:
+           log.error("Enter only integer values")
+      else:
+         if choice == 1:
             book = get_book_obj()
             books.add_addressbook(book)
             book.add_contacts()
             books.save_to_json()
             books.save_to_csv()
 
-        elif choice==2:
-           book = get_book_obj()
-           name=input("Enter the name of the Person: ")
-           book.edit_contact(name)
-        elif choice==3:
-           book = get_book_obj()
-           name=input("Enter the name of the Person: ")
-           book.get_contact(name)
-         
-        elif choice==4:
-           city_or_state=input("Enter the city or state: ")
-           books.get_contacts_by_city_or_state(city_or_state)
-           
-        elif choice==5:
-           book = get_book_obj()
-           name=input("Enter the name of the Person: ")
-           book.delete_contact(name)
-        else:
-           break
-   
-   # dict1 = {'deepak': Contact('deepak', 'asd', 'asd', 'asd', 'asd', 'asd', 'asd', 'asd'),
-   #          'joshi': Contact('joshi', 'asd', 'asd', 'asd', 'asd', 'asd', 'asd', 'asd'),
-   #          'abhi:': Contact('abhi', 'asd', 'asd', 'asd', 'asd', 'asd', 'asd', 'asd')}
-   
-   # print(dict1.items())
-   # sorted_dict = dict(sorted(dict1.items(), key=lambda x:x[1].fname))
-      
-   # print(sorted_dict)
-     
-    
-        
-                
-
-                
-                
-                   
-
-
-    
+         elif choice==2:
+            book = get_book_obj()
+            name=input("Enter the name of the Person: ")
+            book.edit_contact(name)
+         elif choice==3:
+            book = get_book_obj()
+            name=input("Enter the name of the Person: ")
+            book.get_contact(name)
+               
+         elif choice==4:
+            city_or_state=input("Enter the city or state: ")
+            books.get_contacts_by_city_or_state(city_or_state)
+            
+         elif choice==5:
+            book = get_book_obj()
+            name=input("Enter the name of the Person: ")
+            book.delete_contact(name)
+         else:
+            break
