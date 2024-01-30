@@ -15,23 +15,63 @@ import re
 class User:
 
     name_pattern = r'^[A-Z]+[a-zA-Z]{2,}$'
-    email_pattern = r'[a-z]+[\.[a-z]*]?@[a-z]{1,}\.[a-z]{2,}'
-    phno_pattern=r'\d{2}\s\d{10}'
+    email_pattern = r'^[a-z]+[\.[a-z]*]?@[a-z]{1,}\.[a-z]{2,}$'
+    phno_pattern=r'^[0-9]{2,3} [0-9]{10}$'
+    password_pattern = r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,}$'
    
+    def __init__(self, first_name, last_name, email, phno, password) -> None:
+        self.__first_name  = self.first_name = first_name
+        self.__last_name = self.last_name=last_name
+        self.__email=self.email=email
+        self.__phno=self.phno=phno
+        self.__password=self.password="bcAd$dfgdfg1"
 
-
-    def __init__(self, first_name, last_name, email) -> None:
-        self.first_name = self.fname = first_name
-        self.last_name = self.lname = last_name
-        self.email=self.mail=email
     @property
-    def mail(self):
-        return self.email
-    @mail.setter
-    def mail(self,email):
+    def password(self):
+        return self.__password
+    
+    @password.setter
+    def password(self,password):
+        try:
+            if self.check_password(password):
+                self.__password = password
+        except ValueError as e:
+            print(e)
+    
+    def check_password(self, password):
+        if re.match(self.password_pattern, password):
+            return True    
+        else: 
+            raise ValueError(f'{password} is invalid')
+
+    @property
+    def phno(self):
+        return self.__phno
+    
+    @phno.setter
+    def phno(self,phno):
+        try:
+            if self.check_phno(phno):
+                self.__phno = phno
+        except ValueError as e:
+            print(e)
+    
+    def check_phno(self, phno):
+        if re.match(self.phno_pattern, phno):
+            return True    
+        else: 
+            raise ValueError(f'{phno} is invalid')
+
+
+    @property
+    def email(self):
+        return self.__email
+    
+    @email.setter
+    def email(self,email):
         try:
             if self.check_email(email):
-                self.email = email
+                self.__email = email
         except ValueError as e:
             print(e)
     
@@ -42,41 +82,40 @@ class User:
             raise ValueError(f'{email} is invalid')
 
     @property
-    def fname(self):
-        return self.first_name
+    def first_name(self):
+        return self.__first_name
     
+    @first_name.setter
+    def first_name(self, first_name):
+        try:
+            if self.check_name(first_name):
+                self.__first_name = first_name
+        except ValueError as e:
+            print(e)
+
     def check_name(self, name):
         if re.match(self.name_pattern, name):
             return True    
         else: 
             raise ValueError(f'{name} is invalid')
-    
-    @fname.setter
-    def fname(self, first_name):
-        try:
-            if self.check_name(first_name):
-                self.first_name = first_name
-        except ValueError as e:
-            print(e)
 
     @property
-    def lname(self):
-        return self.last_name
+    def last_name(self):
+        return self.__last_name
 
-    @lname.setter
-    def lname(self, last_name):
+    @last_name.setter
+    def last_name(self, last_name):
         try:
             if self.check_name(last_name):
-                self.last_name = last_name
+                self.__last_name = last_name
         except ValueError as e:
             print(e)
         
 
     
 if __name__=="__main__":
-    u1=User("Deepak","Chandu","deepak@gmail.com")
-    # u1.first_name="De"
-   
+    u1=User("Deepak","Chandu","deepak@gmail.com","91 7997799689","Abcd1234")
+    
 
         
          
