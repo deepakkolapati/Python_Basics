@@ -15,11 +15,31 @@ import re
 class User:
 
     name_pattern = r'^[A-Z]+[a-zA-Z]{2,}$'
-    
+    email_pattern = r'[a-z]+[\.[a-z]*]?@[a-z]{1,}\.[a-z]{2,}'
+    phno_pattern=r'\d{2}\s\d{10}'
+   
 
-    def __init__(self, first_name, last_name) -> None:
+
+    def __init__(self, first_name, last_name, email) -> None:
         self.first_name = self.fname = first_name
         self.last_name = self.lname = last_name
+        self.email=self.mail=email
+    @property
+    def mail(self):
+        return self.email
+    @mail.setter
+    def mail(self,email):
+        try:
+            if self.check_email(email):
+                self.email = email
+        except ValueError as e:
+            print(e)
+    
+    def check_email(self, email):
+        if re.match(self.email_pattern, email):
+            return True    
+        else: 
+            raise ValueError(f'{email} is invalid')
 
     @property
     def fname(self):
@@ -54,7 +74,9 @@ class User:
 
     
 if __name__=="__main__":
-    user = User('Dee', 'Cha')
+    u1=User("Deepak","Chandu","deepak@gmail.com")
+    # u1.first_name="De"
+   
 
         
          
