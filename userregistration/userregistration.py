@@ -11,7 +11,8 @@
 @Title : User Registration Problem
 '''
 import re
-
+from logger import get_logger
+log=get_logger()
 class User:
 
     name_pattern = r'^[A-Z]+[a-zA-Z]{2,}$'
@@ -24,7 +25,7 @@ class User:
         self.__last_name = self.last_name=last_name
         self.__email=self.email=email
         self.__phno=self.phno=phno
-        self.__password=self.password="bcAd$dfgdfg1"
+        self.__password=self.password=password
 
     @property
     def password(self):
@@ -36,7 +37,7 @@ class User:
             if self.check_password(password):
                 self.__password = password
         except ValueError as e:
-            print(e)
+            log.error(e)
     
     def check_password(self, password):
         if re.match(self.password_pattern, password):
@@ -54,7 +55,7 @@ class User:
             if self.check_phno(phno):
                 self.__phno = phno
         except ValueError as e:
-            print(e)
+            log.error(e)
     
     def check_phno(self, phno):
         if re.match(self.phno_pattern, phno):
@@ -73,7 +74,7 @@ class User:
             if self.check_email(email):
                 self.__email = email
         except ValueError as e:
-            print(e)
+            log.error(e)
     
     def check_email(self, email):
         if re.match(self.email_pattern, email):
@@ -91,7 +92,7 @@ class User:
             if self.check_name(first_name):
                 self.__first_name = first_name
         except ValueError as e:
-            print(e)
+            log.error(e)
 
     def check_name(self, name):
         if re.match(self.name_pattern, name):
@@ -109,12 +110,12 @@ class User:
             if self.check_name(last_name):
                 self.__last_name = last_name
         except ValueError as e:
-            print(e)
+            log.error(e)
         
 
     
 if __name__=="__main__":
-    u1=User("Deepak","Chandu","deepak@gmail.com","91 7997799689","Abcd1234")
+    u1=User("Deepak","Chandu","deepk@gmail.c","91 799779989","bcd$dfgdfg1")
     
 
         
