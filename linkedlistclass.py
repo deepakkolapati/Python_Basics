@@ -78,7 +78,7 @@ class LinkedList:
     def remove(self,val):
         if not self.head:
             print("Linked List is empty")
-            return 
+            return
         if self.head.val==val:
             self.head=self.head.next
             self.print()
@@ -111,3 +111,7 @@ if __name__=="__main__":
     l1.reverse()
 
 
+
+    
+    
+    
