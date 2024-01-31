@@ -6,6 +6,7 @@ def user():
     return User('Deepak', 'Chandu', 'deepak@gmail.com', '91 9087765432', 'Abcd@1234')
 
 class TestUser:
+  
 
     def test_first_name_success(self, user):
         assert user.first_name == 'Deepak'
