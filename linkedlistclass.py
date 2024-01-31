@@ -165,7 +165,6 @@ class LinkedList:
                 curr.next=prev
                 prev=curr
         self.head=curr
-        self.print()
 
 
 if __name__=="__main__":
