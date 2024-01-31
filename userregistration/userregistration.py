@@ -16,7 +16,7 @@ log=get_logger()
 class User:
 
     name_pattern = r'^[A-Z]+[a-zA-Z]{2,}$'
-    email_pattern = r'^[a-z]+[\.[a-z]*]?@[a-z]{1,}\.[a-z]{2,}$'
+    email_pattern = r'^[a-z0-9+-]+(\.)?[a-z0-9+-]+(\.)?@[a-z0-9]+\.[a-z]{2,}(\.[a-z]+)?$'
     phno_pattern=r'^[0-9]{2,3} [0-9]{10}$'
     password_pattern = r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&]).{8,}$'
    
@@ -37,6 +37,7 @@ class User:
             if self.check_password(password):
                 self.__password = password
         except ValueError as e:
+            self.__password = e
             log.error(e)
     
     def check_password(self, password):
@@ -55,6 +56,7 @@ class User:
             if self.check_phno(phno):
                 self.__phno = phno
         except ValueError as e:
+            self.__phno = e
             log.error(e)
     
     def check_phno(self, phno):
@@ -74,6 +76,7 @@ class User:
             if self.check_email(email):
                 self.__email = email
         except ValueError as e:
+            self.__email = e
             log.error(e)
     
     def check_email(self, email):
@@ -92,6 +95,7 @@ class User:
             if self.check_name(first_name):
                 self.__first_name = first_name
         except ValueError as e:
+            self.__first_name = e
             log.error(e)
 
     def check_name(self, name):
@@ -110,12 +114,15 @@ class User:
             if self.check_name(last_name):
                 self.__last_name = last_name
         except ValueError as e:
+            self.__last_name = e
             log.error(e)
         
 
     
 if __name__=="__main__":
     u1=User("Deepak","Chandu","deepk@gmail.c","91 799779989","bcd$dfgdfg1")
+    u2=User("Joshi","Fe","joshgmail.c","91 799989","bcd$dfgdfg1")
+
     
 
         
