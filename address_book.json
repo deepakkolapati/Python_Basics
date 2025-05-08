@@ -1,0 +1,26 @@
+{
+    "abc": {
+        "ayush": {
+            "fname": "ayush",
+            "lname": "kumar",
+            "address": "bihar",
+            "city": "patna",
+            "state": "bihar",
+            "zip": "355",
+            "phno": "463",
+            "email": "ayush@gmail.com"
+        }
+    },
+    "xyz": {
+        "deepak": {
+            "fname": "deepak",
+            "lname": "chand",
+            "address": "chennai",
+            "city": "chennai",
+            "state": "tn",
+            "zip": "34",
+            "phno": "35",
+            "email": "35"
+        }
+    }
+}
